@@ -1,5 +1,6 @@
 from rest_framework.serializers import ModelSerializer
-from courses.models import Category, Course, Lesson, Tag, User
+
+from courses.models import Category, Course, Lesson, Tag, User, Comment
 
 
 class CategorySerializer(ModelSerializer):
@@ -47,6 +48,12 @@ class UserSerializer(ModelSerializer):
             }
         }
 
+    def update(self, instance, validated_data):
+        if 'password' in validated_data:
+            instance.set_password(validated_data['password'])
+            instance.save()
+        return instance
+
     def create(self, validated_data):
         data = validated_data.copy()
         u = User(**data)
@@ -60,3 +67,12 @@ class UserSerializer(ModelSerializer):
         if instance.avatar:
             d['avatar'] = instance.avatar.url
         return d
+
+class CommentSerializer(ModelSerializer):
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['user'] = UserSerializer(instance.user).data
+        return data
+    class Meta:
+        model = Comment
+        fields = ['id', 'content', 'created_at', 'user', 'lesson']
