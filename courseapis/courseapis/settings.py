@@ -32,8 +32,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -65,6 +63,8 @@ REST_FRAMEWORK = {
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
     )
 }
+OAUTH2_PROVIDER = {'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore' }
+
 ROOT_URLCONF = 'courseapis.urls'
 
 AUTH_USER_MODEL = "courses.User"
@@ -89,7 +89,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'courseapis.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -98,11 +97,10 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'coursedb',
         'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '' # default local host
+        'PASSWORD': 'Admin@123',
+        'HOST': ''  # default local host
     }
 }
-
 
 # import pymysql
 
@@ -124,7 +122,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -136,7 +133,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
@@ -146,3 +142,18 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import cloudinary
+import cloudinary.uploader
+from cloudinary.utils import cloudinary_url
+
+# Configuration
+cloudinary.config(
+    cloud_name="dssijhrst",
+    api_key="979849377371891",
+    api_secret="3V_MpBv1G_D-gn1z5VJonRaVX-E",  # Click 'View API Keys' above to copy your API secret
+    secure=True
+)
+
+CLIENT_ID = 'Znjytmg0P7wXDJcbpqmJvIcU0fBOzsWfCAfPfcDM'
+CLIENT_SECRET = 'FYbFIVb8sU8viK5AUFafmqqbMNNq5wpl4f01q5yW6vLjZlovO5qI2SvfU6KAsE1MxVTEvaAr3ErzgJgJV4xc326EAouvkgzgy7p7VYVftbS6aBK2dvdaSuGkRE1zFJ86'
